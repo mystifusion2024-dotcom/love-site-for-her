@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts: Great Vibes (English Script) and Noto Sans Tamil (Tamil) -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Noto+Sans+Tamil:wght@300;400;600;700&family=Poppins:wght[300;400;600]&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* Custom Font Assignments */
+        body {
+            font-family: 'Poppins', 'Noto Sans Tamil', sans-serif;
+            background-color: #fff0f5; /* Lavender Blush */
+            overflow-x: hidden;
+        }
+        
+        .script-font {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .tamil-font {
+            font-family: 'Noto Sans Tamil', sans-serif;
+        }
+
+        /* Floating Hearts Background */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -20px;
+            color: rgba(255, 182, 193, 0.6);
+            animation: floatUp 15s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Polaroid Effect */
+        .polaroid {
+            background: white;
+            padding: 10px 10px 30px 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            transform: rotate(-2deg);
+        }
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+            z-index: 10;
+            border: 2px solid #ffb7b2;
+        }
+        .polaroid:nth-child(even) {
+            transform: rotate(2deg);
+        }
+        .polaroid:nth-child(even):hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        /* Soft Glow Text */
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        /* Timeline Dot Pulse */
+        .pulse-dot {
+            animation: pulse-pink 2s infinite;
+        }
+        @keyframes pulse-pink {
+            0% { box-shadow: 0 0 0 0 rgba(255, 182, 193, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 182, 193, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 182, 193, 0); }
+        }
+
+        /* Blooming Flower Animation (CSS Only) */
+        .flower-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+        }
+        
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: #ffeb3b;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            box-shadow: 0 0 10px #ffeb3b;
+        }
+
+        .petal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: #ff4081;
+            border-radius: 40px 0px 40px 0px;
+            transform-origin: 0 0;
+            opacity: 0; 
+            transition: all 1s ease-in-out;
+        }
+
+        /* Animation States for Flower */
+        .blooming .petal {
+            opacity: 0.9;
+        }
+
+        .blooming .p1 { transform: rotate(0deg) translate(0,0); }
+        .blooming .p2 { transform: rotate(60deg) translate(0,0); }
+        .blooming .p3 { transform: rotate(120deg) translate(0,0); }
+        .blooming .p4 { transform: rotate(180deg) translate(0,0); }
+        .blooming .p5 { transform: rotate(240deg) translate(0,0); }
+        .blooming .p6 { transform: rotate(300deg) translate(0,0); }
+
+        /* Heart Beating */
+        .heart-beat {
+            animation: beat 1.5s infinite;
+            display: inline-block;
+            color: #e11d48;
+        }
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff0f5; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffb7b2; 
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff69b4; 
+        }
+
+        /* Modal Bounce Animation */
+        .modal-content {
+            animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes modalPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* New: Music prompt glow */
+        .music-prompt {
+            text-shadow: 0 0 5px #f9a8d4; /* Tailwind pink-300 */
+        }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <!-- Floating Hearts Background -->
+    <div class="heart-bg" id="heart-bg"></div>
+
+    <!-- Music Player Control -->
+    <div class="fixed bottom-5 right-5 z-50 flex items-end flex-col">
+        <!-- New: Instruction to tap -->
+        <p class="text-xs text-pink-400 font-semibold mb-1 mr-2 animate-pulse music-prompt" id="music-prompt">
+            <i class="fas fa-hand-point-left"></i> Tap to start our song!
+        </p>
+        
+        <!-- Button is now in the initial 'Play Music' state -->
+        <button id="music-btn" class="bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg border border-pink-200 text-pink-500 hover:bg-pink-50 transition-all duration-300">
+            <i class="fas fa-music animate-pulse"></i> <span class="text-xs font-semibold ml-1" id="music-text">Play Music</span>
+        </button>
+        
+        <!-- Audio tag removed 'autoplay' attribute for better control -->
+        <audio id="bg-music" loop>
+            <source src="audio/I_Wanna_Be_Yours.mp3"> type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md shadow-sm z-40">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="text-2xl font-bold text-pink-500 script-font">Us &lt;3</div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium text-gray-600">
+                <a href="#home" class="hover:text-pink-500 transition">Home</a>
+                <a href="#story" class="hover:text-pink-500 transition">Our Story</a>
+                <a href="#reasons" class="hover:text-pink-500 transition">Why You?</a>
+                <a href="#gallery" class="hover:text-pink-500 transition">Memories</a>
+                <a href="#surprise" class="hover:text-pink-500 transition">Surprise</a>
+            </div>
+            <!-- Mobile Menu Icon -->
+            <div class="md:hidden text-pink-500">
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Home Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative bg-gradient-to-b from-pink-50 via-white to-pink-50">
+        <div class="text-center z-10 px-4">
+            <div class="mb-4 text-pink-400 text-5xl md:text-7xl animate-bounce">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h1 class="text-5xl md:text-8xl script-font text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-400 mb-4 glow-text">
+                En Anbe (என் அன்பே)
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 font-light mb-6">
+                Me & You <span class="text-pink-500 mx-2">&bull;</span> Forever
+            </p>
+            <div class="bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-sm inline-block max-w-lg border border-pink-100">
+                <p class="tamil-font text-xl md:text-2xl text-gray-700 leading-relaxed">
+                    "நீ நான் எழுதத் தெரியாத கவிதை... <br>
+                    என் வாழ்க்கையின் மிக அழகான தேவதை AFN.Ennavaley"
+                </p>
+                <p class="text-xs text-pink-400 mt-2 uppercase tracking-widest">I am Always Yours</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Love Story Timeline -->
+    <section id="story" class="py-20 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-4xl md:text-5xl script-font text-center text-pink-500 mb-16">Our Love Story</h2>
+            
+            <div class="relative border-l-4 border-pink-200 ml-6 md:ml-auto md:mx-auto md:w-full">
+                <!-- Timeline Item 1 -->
+                <div class="mb-12 ml-6 md:ml-0 md:flex md:items-center md:justify-between w-full">
+                    <div class="md:w-5/12 md:text-right md:pr-8 order-1">
+                        <h3 class="text-xl font-bold text-gray-800">The First Sight</h3>
+                        <h4 class="tamil-font text-pink-500 font-medium">முதல் சந்திப்பு</h4>
+                        <p class="text-gray-500 mt-2 text-sm">Paatha vidana thonum la ada ithan kaadhala. Ammu umma.....</p>
+                    </div>
+                    <div class="absolute -left-3 md:left-1/2 md:-ml-3 w-6 h-6 bg-pink-500 rounded-full border-4 border-white pulse-dot md:order-2"></div>
+                    <div class="md:w-5/12 md:pl-8 order-3"></div> <!-- Spacer -->
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="mb-12 ml-6 md:ml-0 md:flex md:items-center md:justify-between w-full">
+                    <div class="md:w-5/12 order-1"></div> <!-- Spacer -->
+                    <div class="absolute -left-3 md:left-1/2 md:-ml-3 w-6 h-6 bg-rose-400 rounded-full border-4 border-white pulse-dot md:order-2"></div>
+                    <div class="md:w-5/12 md:pl-8 order-3">
+                        <h3 class="text-xl font-bold text-gray-800">Falling in Love</h3>
+                        <h4 class="tamil-font text-pink-500 font-medium">காதல் மலர்ந்தது</h4>
+                        <p class="text-gray-500 mt-2 text-sm">Ena alagu theriyumaa avalo oru chubbyness cute ahh iruntha mailu AFN.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="ml-6 md:ml-0 md:flex md:items-center md:justify-between w-full">
+                    <div class="md:w-5/12 md:text-right md:pr-8 order-1">
+                        <h3 class="text-xl font-bold text-gray-800">Forever & Always</h3>
+                        <h4 class="tamil-font text-pink-500 font-medium">என்றும் உன்னுடன்</h4>
+                        <p class="text-gray-500 mt-2 text-sm">Every day is a new adventure with you. You are my home, You are my peace baby.</p>
+                    </div>
+                    <div class="absolute -left-3 md:left-1/2 md:-ml-3 w-6 h-6 bg-red-400 rounded-full border-4 border-white pulse-dot md:order-2"></div>
+                    <div class="md:w-5/12 md:pl-8 order-3"></div> <!-- Spacer -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Why I Love You (Updated to 4-column layout on large screens) -->
+    <section id="reasons" class="py-20 bg-pink-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl script-font text-center text-pink-500 mb-4">Why I Love You</h2>
+            <p class="text-center text-gray-500 mb-12 tamil-font">உன்னை காதலிக்க ஆயிரம் காரணங்கள் "Note some of them"</p>
+
+            <!-- Grid for four reasons -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                
+                <!-- Card 1: Your Smile (NOW CLICKABLE) -->
+                <div onclick="showSmileModal()" class="bg-white p-6 rounded-2xl shadow-md text-center hover:-translate-y-2 transition duration-300 cursor-pointer ring-2 ring-transparent hover:ring-pink-300 relative group">
+                    <div class="absolute top-2 right-2 text-pink-300 animate-pulse"><i class="fas fa-hand-pointer"></i></div>
+                    <div class="text-4xl text-rose-400 mb-4 group-hover:scale-110 transition"><i class="fas fa-smile-beam"></i></div>
+                    <h3 class="font-bold text-lg mb-2">Your Smile</h3>
+                    <p class="tamil-font text-gray-600">உன் புன்னகை என் உலகம்.</p>
+                    <p class="text-xs text-gray-400 mt-2">Click to read more!</p>
+                </div>
+
+                <!-- Card 2: Chubby Cuteness (CLICKABLE) -->
+                <div onclick="showCheeksModal()" class="bg-white p-6 rounded-2xl shadow-md text-center hover:-translate-y-2 transition duration-300 cursor-pointer ring-2 ring-transparent hover:ring-pink-300 relative group">
+                    <div class="absolute top-2 right-2 text-pink-300 animate-pulse"><i class="fas fa-hand-pointer"></i></div>
+                    <div class="text-4xl text-rose-400 mb-4 group-hover:scale-110 transition"><i class="fas fa-baby"></i></div>
+                    <h3 class="font-bold text-lg mb-2">Chubby Cuteness</h3>
+                    <p class="tamil-font text-gray-600">உன் கொழுகொழு கன்னங்கள்.</p>
+                    <p class="text-xs text-gray-400 mt-2">Click to see why I love them!</p>
+                </div>
+
+                <!-- Card 3: Your Kindness (NOW CLICKABLE) -->
+                <div onclick="showKindnessModal()" class="bg-white p-6 rounded-2xl shadow-md text-center hover:-translate-y-2 transition duration-300 cursor-pointer ring-2 ring-transparent hover:ring-pink-300 relative group">
+                    <div class="absolute top-2 right-2 text-pink-300 animate-pulse"><i class="fas fa-hand-pointer"></i></div>
+                    <div class="text-4xl text-rose-400 mb-4 group-hover:scale-110 transition"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3 class="font-bold text-lg mb-2">Your Kindness</h3>
+                    <p class="tamil-font text-gray-600">உன் தூய அன்பு.</p>
+                    <p class="text-xs text-gray-400 mt-2">Click to read more!</p>
+                </div>
+                
+                 <!-- Card 4: Loyalty (NEW CARD) -->
+                <div onclick="showLoyaltyModal()" class="bg-white p-6 rounded-2xl shadow-md text-center hover:-translate-y-2 transition duration-300 cursor-pointer ring-2 ring-transparent hover:ring-pink-300 relative group">
+                    <div class="absolute top-2 right-2 text-pink-300 animate-pulse"><i class="fas fa-hand-pointer"></i></div>
+                    <div class="text-4xl text-rose-400 mb-4 group-hover:scale-110 transition"><i class="fas fa-gem"></i></div>
+                    <h3 class="font-bold text-lg mb-2">Your Loyalty</h3>
+                    <p class="tamil-font text-gray-600">உன் உண்மையான அன்பு.</p>
+                    <p class="text-xs text-gray-400 mt-2">Click to see why I rely on you!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Gallery -->
+    <section id="gallery" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl script-font text-center text-pink-500 mb-12">Sweet Memories</h2>
+            
+            <div class="flex flex-wrap justify-center gap-8">
+                <!-- Photo 1 -->
+                <div class="polaroid w-64 h-80 bg-white cursor-pointer group">
+                    <div class="w-full h-48 bg-gray-200 overflow-hidden rounded-sm">
+                        <!-- Placeholder for user's photo -->
+                        <img src="images/photo_2_2025-11-29_16-18-48.jpg" alt="Couple" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="text-center pt-4">
+                        <p class="script-font text-2xl text-gray-800">Magical Day</p>
+                        <p class="tamil-font text-xs text-pink-500 opacity-0 group-hover:opacity-100 transition">என் அழகான ராட்சசி</p>
+                    </div>
+                </div>
+
+                <!-- Photo 2 -->
+                <div class="polaroid w-64 h-80 bg-white cursor-pointer group">
+                    <div class="w-full h-48 bg-gray-200 overflow-hidden rounded-sm">
+                         <img src="images/photo_3_2025-11-29_16-18-48.jpg" alt="Holding Hands" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="text-center pt-4">
+                        <p class="script-font text-2xl text-gray-800">Hold my Hand</p>
+                        <p class="tamil-font text-xs text-pink-500 opacity-0 group-hover:opacity-100 transition">விடாதே என்னை...</p>
+                    </div>
+                </div>
+
+                <!-- Photo 3 -->
+                <div class="polaroid w-64 h-80 bg-white cursor-pointer group">
+                    <div class="w-full h-48 bg-gray-200 overflow-hidden rounded-sm">
+                         <img src="images/photo_5_2025-11-29_16-18-48.jpg" alt="Smile" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="text-center pt-4">
+                        <p class="script-font text-2xl text-gray-800">Just You</p>
+                        <p class="tamil-font text-xs text-pink-500 opacity-0 group-hover:opacity-100 transition">என் உலகம் நீயே</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- NEW: Featured Memory Section for Custom Image and Message -->
+            <div class="mt-20 max-w-lg mx-auto bg-pink-50 p-6 rounded-2xl shadow-2xl border-4 border-pink-200">
+                <h3 class="text-3xl script-font text-center text-rose-500 mb-6">Featured Memory: <span class="tamil-font">என் ராணி</span></h3>
+
+                <!-- Image Container -->
+                <div class="w-full h-auto bg-gray-200 overflow-hidden rounded-lg shadow-xl mb-6">
+                    <!-- 
+                        !!! EDIT IMAGE LINK HERE !!!
+                        Replace the 'src' attribute below with the URL of your girlfriend's special image.
+                    -->
+                    <img 
+                        src="images/photo_4_2025-11-29_16-18-48.jpg" 
+                        alt="Your Girlfriend's Special Photo" 
+                        class="w-full h-full object-cover rounded-lg"
+                        onerror="this.onerror=null; this.src='https://placehold.co/400x600/ffb6c1/ffffff?text=Image+Not+Found'"
+                    >
+                </div>
+
+                <!-- Message Area -->
+                <div class="text-center p-4 bg-white rounded-xl shadow-inner border border-pink-100">
+                    <!-- 
+                        !!! EDIT THIS MESSAGE AREA LATER !!!
+                        This space is dedicated for your personal message below the image. 
+                        You can write your special message here in Tamil or English.
+                    -->
+                    <p class="text-lg text-gray-700 italic">
+                        enadhu raaniye enadhu super dominant alageyyy I love you chello
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Messages for You -->
+    <section id="messages" class="py-20 bg-pink-50 relative overflow-hidden">
+        <div class="absolute -right-20 top-20 text-9xl text-pink-100 opacity-50 z-0">
+            <i class="fas fa-envelope-open-text"></i>
+        </div>
+        <div class="container mx-auto px-4 relative z-10 max-w-3xl text-center">
+            <h2 class="text-4xl md:text-5xl script-font text-pink-500 mb-8">Letters to My Love</h2>
+            
+            <div class="bg-white p-8 md:p-12 rounded-lg shadow-xl border border-pink-100 italic text-gray-600 mb-8 relative">
+                <div class="text-4xl text-pink-200 absolute -top-4 -left-2">"</div>
+                <p class="mb-4 text-lg">
+                    Sometimes words aren't enough to tell you how much you mean to me. You are the peace I was searching for, and the love I always dreamed of.
+                </p>
+                <p class="tamil-font font-medium text-pink-500 text-xl">
+                    "உன்னோடு வாழும் நொடிகள் ஒவ்வொன்றும் எனக்கு சொர்க்கம்."
+                </p>
+                <div class="text-4xl text-pink-200 absolute -bottom-8 -right-2">"</div>
+            </div>
+
+            <button onclick="showLoveModal()" class="group relative px-8 py-3 bg-gradient-to-r from-rose-400 to-pink-500 text-white rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition duration-300 overflow-hidden">
+                <span class="relative z-10 font-bold tracking-wider">Click for Love <i class="fas fa-heart ml-2 group-hover:animate-ping"></i></span>
+                <div class="absolute inset-0 h-full w-full bg-gradient-to-r from-pink-500 to-rose-400 opacity-0 group-hover:opacity-100 transition duration-300"></div>
+            </button>
+        </div>
+    </section>
+
+    <!-- 6. Surprise Section -->
+    <section id="surprise" class="py-24 bg-gradient-to-t from-red-50 to-white min-h-[60vh] flex flex-col items-center justify-center text-center">
+        
+        <h2 class="text-3xl font-light text-gray-500 mb-10 tracking-widest uppercase">A Little Gift</h2>
+        
+        <!-- Blooming Rose CSS Animation -->
+        <div class="flower-container" id="flower">
+            <div class="center"></div>
+            <div class="petal p1"></div>
+            <div class="petal p2"></div>
+            <div class="petal p3"></div>
+            <div class="petal p4"></div>
+            <div class="petal p5"></div>
+            <div class="petal p6"></div>
+        </div>
+
+        <div class="mt-12 space-y-4 px-4 opacity-0 transition duration-1000 delay-500" id="surprise-text">
+            <div class="text-6xl heart-beat">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h1 class="text-3xl md:text-5xl tamil-font font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-600 py-2">
+                "Kadavul kudutha varam Theriyuma ni."
+            </h1>
+            <p class="text-gray-500 script-font text-2xl">(proud ahh solluven mitha ponunga maathiri emathura ponnu illada en aalu enakaga enaiya ninachutu vaaluava daa en bubu)</p>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-pink-100 py-8 text-center">
+        <p class="text-gray-600 script-font text-2xl">Dedicated with love only for you <i class="fas fa-heart text-red-500 text-xs"></i></p>
+        <p class="text-xs text-gray-400 mt-2 tracking-widest uppercase">Forever Yours</p>
+    </footer>
+
+    <!-- Hidden Surprise Modal (Love Button) -->
+    <div id="loveModal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center px-4 backdrop-blur-sm">
+        <div class="modal-content bg-white rounded-2xl p-8 max-w-sm w-full text-center relative">
+            <button onclick="closeLoveModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="text-6xl text-pink-500 mb-4">
+                <i class="fas fa-kiss-wink-heart"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">I Miss You!</h3>
+            <p class="tamil-font text-lg text-pink-600 mb-4">Serious ahh theriyuma romba miss pandren Unakku theriyathu How how mich you d anbu manaiviye.</p>
+            <p class="text-gray-500 text-sm">Can't wait to see your cute face again.</p>
+        </div>
+    </div>
+
+    <!-- Hidden Cheeks Modal (Chubby Cuteness Button) -->
+    <div id="cheeksModal" class="fixed inset-0 bg-black/50 z-[70] hidden flex items-center justify-center px-4 backdrop-blur-sm">
+        <div class="modal-content bg-white rounded-2xl p-8 max-w-sm w-full text-center relative border-4 border-pink-100">
+            <button onclick="closeCheeksModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="text-6xl text-rose-400 mb-4 animate-bounce">
+                <i class="fas fa-grin-hearts"></i>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">My Cheeks Queen!</h3>
+            
+            <!-- Custom Cute Message Box -->
+            <div class="bg-pink-50 p-4 rounded-xl mb-4 text-left shadow-inner">
+                <p class="text-gray-700 font-semibold leading-relaxed">
+                    adiye gundamma en chella pondati busu busu I Love You pondati...💞
+                </p>
+                <p class="text-gray-700 font-semibold leading-relaxed mt-2">
+                    The way you are perfect d gunduu love you 3000 times baby.
+                </p>
+                <p class="text-pink-600 font-medium leading-relaxed mt-2 italic text-sm">
+                    Really missing that the best bed,thalavani Odambu, katta thoda naatu katta thekku sela...
+                </p>
+            </div>
+            
+            <p class="text-gray-500 text-sm italic">
+                (En Anbe,En kadhaley AFN)
+            </p>
+            
+            <div class="mt-6 flex justify-center space-x-2 text-pink-400">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hidden Smile Modal (Your Smile Button) - New -->
+    <div id="smileModal" class="fixed inset-0 bg-black/50 z-[70] hidden flex items-center justify-center px-4 backdrop-blur-sm">
+        <div class="modal-content bg-white rounded-2xl p-8 max-w-sm w-full text-center relative border-4 border-rose-100">
+            <button onclick="closeSmileModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="text-6xl text-pink-500 mb-4 animate-pulse">
+                <i class="fas fa-grin-alt"></i>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">My Happy Place!</h3>
+            
+            <!-- Custom Smile Message Box -->
+            <div class="bg-rose-50 p-4 rounded-xl mb-4 text-left shadow-inner">
+                <p class="text-gray-700 font-medium leading-relaxed">
+                    Un sriripu iruku paaren aii damn cute d apadiye en manasula ulla baaramey koranjurum d gunduu
+                </p>
+                <p class="tamil-font text-pink-600 font-semibold leading-relaxed mt-2 italic text-sm">
+                    நான் உனக்காக இந்த பூமிக்கே வந்தேன்.
+                </p>
+            </div>
+            
+            <p class="text-gray-500 text-sm italic">
+                (It literally melts my heart every time.)
+            </p>
+        </div>
+    </div>
+    
+    <!-- Hidden Kindness Modal (Your Kindness Button) - New -->
+    <div id="kindnessModal" class="fixed inset-0 bg-black/50 z-[70] hidden flex items-center justify-center px-4 backdrop-blur-sm">
+        <div class="modal-content bg-white rounded-2xl p-8 max-w-sm w-full text-center relative border-4 border-pink-100">
+            <button onclick="closeKindnessModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="text-6xl text-rose-400 mb-4">
+                <i class="fas fa-dove"></i>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">The Purest Heart</h3>
+            
+            <!-- Custom Kindness Message Box -->
+            <div class="bg-pink-50 p-4 rounded-xl mb-4 text-left shadow-inner">
+                <p class="text-gray-700 font-medium leading-relaxed">
+                    Your kindness mind blowing d gundamma, especially when no one is watching, makes me love you more every day avalo pure d pondati. You have the purest soul I know.
+                </p>
+                <p class="tamil-font text-pink-600 font-semibold leading-relaxed mt-2 italic text-sm">
+                    உன் அன்பே என் ஆதாரம்.AFN
+                </p>
+            </div>
+            
+            <p class="text-gray-500 text-sm italic">
+                (Ennaval d chellamey ni, my love.)
+            </p>
+        </div>
+    </div>
+    
+    <!-- Hidden Loyalty Modal (Loyalty Button) - New -->
+    <div id="loyaltyModal" class="fixed inset-0 bg-black/50 z-[70] hidden flex items-center justify-center px-4 backdrop-blur-sm">
+        <div class="modal-content bg-white rounded-2xl p-8 max-w-sm w-full text-center relative border-4 border-red-100">
+            <button onclick="closeLoyaltyModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="text-6xl text-red-400 mb-4 heart-beat">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">My Rock, My Future</h3>
+            
+            <!-- Custom Loyalty Message Box -->
+            <div class="bg-red-50 p-4 rounded-xl mb-4 text-left shadow-inner">
+                <p class="text-gray-700 font-medium leading-relaxed">
+                   Ennoda fvrt topic un loyalty just peak super theriyuma naa kuduthu vechurukanum d ipadi oru loyalty aana ponnu kedaika mine d ni
+                </p>
+                <p class="tamil-font text-red-600 font-semibold leading-relaxed mt-2 italic text-sm">
+                    என்றும் உன்னோடு நான்.
+                </p>
+            </div>
+            
+            <p class="text-gray-500 text-sm italic">
+                (Dhank uhh for being my constant.)
+            </p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // 1. Generate Floating Hearts
+        function createHearts() {
+            const container = document.getElementById('heart-bg');
+            const heartCount = 15; // Number of hearts at a time
+
+            for (let i = 0; i < heartCount; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('floating-heart');
+                    heart.innerHTML = '<i class="fas fa-heart"></i>';
+                    
+                    // Randomize properties
+                    const size = Math.random() * 20 + 10 + 'px';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.fontSize = size;
+                    heart.style.animationDuration = (Math.random() * 10 + 10) + 's'; // 10-20s duration
+                    
+                    container.appendChild(heart);
+
+                    // Remove after animation
+                    setTimeout(() => {
+                        heart.remove();
+                        createSingleHeart(); // Replace it to keep the loop going
+                    }, 20000);
+                }, i * 1000);
+            }
+        }
+
+        function createSingleHeart() {
+            const container = document.getElementById('heart-bg');
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = '<i class="fas fa-heart"></i>';
+            const size = Math.random() * 20 + 10 + 'px';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = size;
+            heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            container.appendChild(heart);
+            setTimeout(() => { heart.remove(); createSingleHeart(); }, 20000);
+        }
+
+        // 2. Music Player Logic
+        const musicBtn = document.getElementById('music-btn');
+        const musicText = document.getElementById('music-text');
+        const musicPrompt = document.getElementById('music-prompt');
+        const audio = document.getElementById('bg-music');
+        let isPlaying = false; 
+
+        // Function to update the UI based on playing state
+        function updateMusicButtonUI(playing) {
+            if (playing) {
+                musicText.textContent = 'Pause';
+                musicBtn.querySelector('i').classList.remove('animate-pulse', 'fa-music');
+                musicBtn.querySelector('i').classList.add('fa-pause');
+                musicBtn.classList.add('bg-pink-100');
+                musicPrompt.classList.add('hidden'); // Hide prompt when playing
+            } else {
+                musicText.textContent = 'Play Music';
+                musicBtn.querySelector('i').classList.add('animate-pulse', 'fa-music');
+                musicBtn.querySelector('i').classList.remove('fa-pause');
+                musicBtn.classList.remove('bg-pink-100');
+                musicPrompt.classList.remove('hidden'); // Show prompt when paused
+            }
+        }
+        
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+            } else {
+                audio.volume = 0.5;
+                // Start playing the music
+                audio.play().catch(e => console.log("Audio play failed interaction needed"));
+            }
+            isPlaying = !isPlaying;
+            updateMusicButtonUI(isPlaying);
+        });
+        
+        // Listen for when audio stops (e.g., if user paused it externally or load failure)
+        audio.addEventListener('pause', () => {
+            if (isPlaying) {
+                isPlaying = false;
+                updateMusicButtonUI(isPlaying);
+            }
+        });
+
+
+        // 3. Modal Logic (Love Letter)
+        function showLoveModal() {
+            document.getElementById('loveModal').classList.remove('hidden');
+        }
+        function closeLoveModal() {
+            document.getElementById('loveModal').classList.add('hidden');
+        }
+
+        // 4. Modal Logic (Cheeks/Chubby Cuteness)
+        function showCheeksModal() {
+            document.getElementById('cheeksModal').classList.remove('hidden');
+        }
+        function closeCheeksModal() {
+            document.getElementById('cheeksModal').classList.add('hidden');
+        }
+        
+        // 5. Modal Logic (Smile) - New
+        function showSmileModal() {
+            document.getElementById('smileModal').classList.remove('hidden');
+        }
+        function closeSmileModal() {
+            document.getElementById('smileModal').classList.add('hidden');
+        }
+        
+        // 6. Modal Logic (Kindness) - New
+        function showKindnessModal() {
+            document.getElementById('kindnessModal').classList.remove('hidden');
+        }
+        function closeKindnessModal() {
+            document.getElementById('kindnessModal').classList.add('hidden');
+        }
+        
+        // 7. Modal Logic (Loyalty) - New
+        function showLoyaltyModal() {
+            document.getElementById('loyaltyModal').classList.remove('hidden');
+        }
+        function closeLoyaltyModal() {
+            document.getElementById('loyaltyModal').classList.add('hidden');
+        }
+
+
+        // 8. Scroll Observer for Surprise Section
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        };
+
+        const surpriseObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Trigger flower bloom
+                    document.getElementById('flower').classList.add('blooming');
+                    // Fade in text
+                    document.getElementById('surprise-text').classList.remove('opacity-0');
+                    document.getElementById('surprise-text').classList.add('opacity-100');
+                }
+            });
+        }, observerOptions);
+
+        surpriseObserver.observe(document.getElementById('surprise'));
+
+        // Initialize
+        window.onload = () => {
+            createHearts();
+            // Set initial UI state (will be "Play Music" until the user clicks it)
+            updateMusicButtonUI(isPlaying);
+        };
+
+    </script>
+</body>
+</html>
